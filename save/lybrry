@@ -1,1 +1,3 @@
-pip install phonenumbers
+pip install openpyxl
+
+pip install droidutils
