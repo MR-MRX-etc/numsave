@@ -1,18 +1,26 @@
-from phonebook import Phonebook
+import openpyxl
+from droidutils import sms
 
-def save_contacts_from_file(file_path):
-    pb = Phonebook()
+def read_numbers_from_txt(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            numbers = [line.strip() for line in file if line.strip()]
+            return numbers
+    except FileNotFoundError:
+        print('فایل مورد نظر یافت نشد.')
+        return []
 
-    with open(file_path, 'r') as file:
-        numbers = file.read().splitlines()
-
+def save_numbers_to_contacts(numbers):
     for number in numbers:
-        pb.add_contact(number)
+        sms.add_contact(number)
 
-    pb.save()
+        print(f"شماره {number} به مخاطبین افزوده شد.")
 
-    print("شماره‌ها با موفقیت در مخاطبین ذخیره شدند.")
+# آدرس فایل متنی شامل شماره‌ها
+file_path = 'numbers.txt'
 
-file_path = "numbers.txt"
+# خواندن شماره‌ها از فایل متنی
+numbers = read_numbers_from_txt(file_path)
 
-save_contacts_from_file(file_path)
+# ذخیره شماره‌ها در مخاطبین گوشی موبایل
+save_numbers_to_contacts(numbers)
